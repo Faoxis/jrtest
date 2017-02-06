@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="taskApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script data-require="angular.js@1.6.1" data-semver="1.6.1" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js"></script>
+    <script src="controller.js"></script>
+    <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script data-require="bootstrap@3.3.7" data-semver="3.3.7" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body ng-controller="taskController">
+    <div class="panel-heading">
+        <h3>Список задач</h3>
+
+        <div class="row">
+
+            <div class="col-md-2">
+                <div row="row">
+
+                    <div class="col-md-4">
+                        <button class="btn btn-info" ng-click="previous()">Назад</button>
+                    </div>
+
+                    <div class="col-md-4">
+                        {{ pageCounter }}
+                    </div>
+
+                    <div class="col-md-4">
+                        <button class="btn btn-info" ng-click="next()">Вперед</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+
+            <div class="col-md-5">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-success" ng-click="selectAllTasks()">Все дела</button>
+                    <button type="button" class="btn btn-primary" ng-click="selectDoneTasks()">Выполненные</button>
+                    <button type="button" class="btn btn-warning" ng-click="selectNotDoneTasks()">Только невыполненные</button>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="taskName" placeholder="Название задачи">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-click="addTask(taskName)">Добавить</button>
+                   </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="panel-body">
+        <div class="panel panel-default">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Задача</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="task in pageTasks">
+
+                    <td ng-if="!task.done">{{task.name}}</td>
+                    <td ng-if="task.done"><del>{{task.name}}</del></td>
+
+                    <td>
+                        <button ng-if="!task.done" class="glyphicon glyphicon-ok"  ng-click="resetTaskDone(task)"></button>
+                        <button ng-if="task.done" class="glyphicon glyphicon-remove" ng-click="resetTaskDone(task)"></button>
+                        <button class="glyphicon glyphicon glyphicon-trash" ng-click="deleteTask(task)"></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
